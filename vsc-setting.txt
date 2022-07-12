@@ -1,0 +1,64 @@
+{
+  "editor.tabSize": 2,
+  "editor.renderWhitespace": "boundary",
+  "emmet.triggerExpansionOnTab": true,
+  "editor.acceptSuggestionOnEnter": "on",
+  "emmet.variables": {
+    "lang": "ja"
+  },
+
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.minimap.enabled": false,
+
+  "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim",
+  "vscode-neovim.neovimInitVimPaths.darwin": "/Users/yahomi/.config/nvim/init.vim",
+  "vscode-neovim.mouseSelectionStartVisualMode": true,
+
+  "terminal.integrated.copyOnSelection": true,
+  "editor.wordWrap": "on",
+  "workbench.iconTheme": "vscode-icons",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "workbench.activityBar.visible": false,
+  "terminal.external.osxExec": "terminal.app",
+
+  "workbench.colorCustomizations": {
+    "terminal.foreground": "#d8dee9",
+    "terminal.background": "#181e27",
+    "terminal.ansiBlack": "#3b4252",
+    "terminal.ansiBlue": "#81a1c1",
+    "terminal.ansiCyan": "#88c0d0",
+    "terminal.ansiGreen": "#a3be8c",
+    "terminal.ansiMagenta": "#b48ead",
+    "terminal.ansiRed": "#bf616a",
+    "terminal.ansiWhite": "#e5e9f0",
+    "terminal.ansiYellow": "#ebcb8b",
+    "terminal.ansiBrightBlack": "#7c7c7c",
+    "terminal.ansiBrightBlue": "#81a1c1",
+    "terminal.ansiBrightCyan": "#88c0d0",
+    "terminal.ansiBrightGreen": "#a3be8c",
+    "terminal.ansiBrightMagenta": "#b48ead",
+    "terminal.ansiBrightRed": "#bf616a",
+    "terminal.ansiBrightWhite": "#e5e9f0",
+    "termina.ansiBrightYellow": "#ebcb8b",
+    "terminal.selectionBackground": "#365183",
+    "terminalCursor.foreground": "#97cfc9"
+  },
+  "terminal.integrated.fontFamily": "monaco",
+  "terminal.integrated.fontWeight": 1000,
+  "terminal.integrated.fontWeightBold": 500,
+  "editor.fontFamily": "Monaco, 'Courier New', 'monospace'",
+  "security.workspace.trust.untrustedFiles": "open",
+  "editor.bracketPairColorization.enabled": false,
+
+  "editor.tokenColorCustomizations": {
+    "[Holistge]": {
+      "textMateRules": []
+    }
+  },
+  "haskell.manageHLS": "GHCup",
+  "window.zoomLevel": 1,
+  "workbench.colorTheme": "Darcula Theme from IntelliJ"
+}
+l
