@@ -1,0 +1,17 @@
+# git-config
+autoload -Uz vcs_info
+setopt prompt_subst
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr "%F{#00d7ff}+"
+zstyle ':vcs_info:*' formats "%F{cyan}%c[%b]%f"
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+precmd () { vcs_info }
+
+PROMPT='
+%F{blue}[yahomi]%f %F{green}[%~]%f %F{cyan}$vcs_info_msg_0_%f
+%# '
+
+alias vi="nvim"
+alias vim="nvim"
+alias view="nvim -R"
+
