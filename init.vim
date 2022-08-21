@@ -45,6 +45,8 @@ set hlsearch
 set clipboard=unnamed
 
 
+
+
 nmap <C-[> :noh<CR>
 
 " 行間を移動させる
@@ -66,11 +68,18 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'vim-jp/vimdoc-ja'
 Plug 'junegunn/fzf', {'dir': '~/.fzf_bin', 'do': './install --all'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'lambdalisue/fern.vim'
-Plug 'lambdalisue/gina.vim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'machakann/vim-sandwich'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'cohama/lexima.vim'
+
+" Fern拡張プラグイン
+Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/nerdfont.vim'
+Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+Plug 'lambdalisue/gina.vim'
+Plug 'lambdalisue/glyph-palette.vim'
+
 
 " lualua 
 Plug 'nvim-lualine/lualine.nvim'
@@ -131,6 +140,34 @@ function! s:show_documentation() abort
   endif
 endfunction
 
+" popupが出る場合の対処 with ゴリラさん
+call lexima#init()
+inoremap <silent><expr> <CR> coc#pum#visible() ? <nop> : <nop>
+
+function! s:coc_pum_lexima_enter() abort
+  let key = lexima#expand('<CR>', 'i')
+  call coc#on_enter()
+  return "\<C-g>u" . key
+endfunction
+
+augroup coc-pum-enter
+  au!
+  au InsertEnter * inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : <SID>coc_pum_lexima_enter()
+augroup END
+
+
+"" lexima
+let g:filetype_js_ts = ['vue', 'javascriptreact', 'javascript', 'typescript', 'typescriptreact']
+
+call lexima#add_rule({ 'filetype': filetype_js_ts, 'char': '>', 'at': '\s([a-zA-Z, ]*\%#)',            'input': '<Left><C-o>f)<Right>a=> {}<Esc>',                 })
+call lexima#add_rule({ 'filetype': filetype_js_ts, 'char': '>', 'at': '\s([a-zA-Z]\+\%#)',             'input': '<Right> => {}<Left>',              'priority': 10 })
+call lexima#add_rule({ 'filetype': filetype_js_ts, 'char': '>', 'at': '[a-z]((.*\%#.*))',              'input': '<Left><C-o>f)a => {}<Esc>',                       })
+call lexima#add_rule({ 'filetype': filetype_js_ts, 'char': '>', 'at': '[a-z]([a-zA-Z]\+\%#)',          'input': ' => {}<Left>',                                    })
+call lexima#add_rule({ 'filetype': filetype_js_ts, 'char': '>', 'at': '(.*[a-zA-Z]\+<[a-zA-Z]\+>\%#)', 'input': '<Left><C-o>f)<Right>a=> {}<Left>',                })
+
+
+autocmd InsertEnter * inoremap <expr> <CR> coc#pum#visible() ? coc#pum#confirm() : <SID>coc_pum_lexima_enter()
+
 "" fzf-preview
 nnoremap <silent> <C-p>  :<C-u>CocCommand fzf-preview.FromResources buffer project_mru project<CR>
 nnoremap <silent> [ff]s  :<C-u>CocCommand fzf-preview.GitStatus<CR>
@@ -146,8 +183,16 @@ nnoremap <silent> [ff]t  :<C-u>CocCommand fzf-preview.CocTypeDefinition<CR>
 nnoremap <silent> [ff]o  :<C-u>CocCommand fzf-preview.CocOutline --add-fzf-arg=--exact --add-fzf-arg=--no-sort<CR>
 
 "" fern
+nnoremap <silent> <Leader>e :<C-u>Fern . -drawer -reveal=% -width=40 -toggle<CR>
 nnoremap <silent> <Leader>E :<C-u>Fern . -drawer<CR>
-nnoremap <silent> <Leader>e :<C-u>Fern . -drawer -reveal=%<CR>
+
+let g:fern#renderer = 'nerdfont'
+
+augroup my-glyph-palette
+  autocmd! *
+  autocmd FileType fern call glyph_palette#apply()
+  autocmd FileType nerdtree,startify call glyph_palette#apply()
+augroup END
 
 "" treesitter
 lua <<EOF
@@ -230,8 +275,10 @@ local colorizer = require('colorizer')
 colorizer.setup()
 EOF
 
-"" gruvbox
+"" colorschemes
+
 colorscheme everforest
+" colorscheme gruvbox-material
 " colorscheme ayu
 
 
