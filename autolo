@@ -1,0 +1,45 @@
+function! beforev#ToggleCheck()
+  let current_row = getline('.')
+
+  if beforev#IsChecked(current_row) == 1
+    call beforev#UnCheck()
+  else
+    call beforev#DoCheck()
+  endif
+endfunction
+
+function! beforev#IsChecked(line)
+  let match_result = match(a:line, '\[x\]')
+  if match_result == -1
+    let is_checked = 0
+  else
+    let is_checked = 1
+  endif
+
+  return is_checked
+endfunction
+
+function! beforev#UnCheck()
+  let current_row = getline('.')
+  let replaced_text = substitute(current_row, '\[x\]', '\[ \]', '')
+
+  call setline('.', replaced_text)
+endfunction
+
+function! beforev#DoCheck()
+  let current_row = getline('.')
+  let replaced_text = substitute(current_row, '\[ \]', '\[x\]', '')
+  
+  call setline('.', replaced_text)
+endfunction
+
+" -------------------------------------------------
+
+if exists('g:loaded_beforev')
+  finish
+endif
+let g:loaded_beforev = 1
+
+command! DoneCheck call beforev#DoCheck()
+command! UndoCheck call beforev#UnCheck()
+command! ToggleCheck call beforev#ToggleCheck()
